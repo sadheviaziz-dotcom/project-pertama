@@ -24,7 +24,7 @@ import type { UserRole } from '../types';
 const ROLES: { role: UserRole; label: string; icon: typeof Anchor; color: string; bg: string }[] = [
   { role: 'nelayan', label: 'Nelayan', icon: Anchor, color: 'text-cyan', bg: 'bg-cyan/10 hover:bg-cyan/20 border-cyan/20' },
   { role: 'tpi', label: 'TPI', icon: ClipboardList, color: 'text-teal', bg: 'bg-teal/10 hover:bg-teal/20 border-teal/20' },
-  { role: 'perusahaan', label: 'Perusahaan', icon: Factory, color: 'text-navy', bg: 'bg-ocean-50 hover:bg-ocean-100 border-ocean-200' },
+  { role: 'perusahaan', label: 'Industri', icon: Factory, color: 'text-navy', bg: 'bg-ocean-50 hover:bg-ocean-100 border-ocean-200' },
   { role: 'pedagang', label: 'Pedagang', icon: Store, color: 'text-purple-600', bg: 'bg-purple-50 hover:bg-purple-100 border-purple-200' },
   { role: 'admin', label: 'Admin', icon: Settings, color: 'text-slate-600', bg: 'bg-slate-50 hover:bg-slate-100 border-slate-200' },
 ];
@@ -337,7 +337,7 @@ export default function LoginPage() {
                 >
                   <option value="nelayan">Nelayan</option>
                   <option value="tpi">TPI (Tempat Pelelangan Ikan)</option>
-                  <option value="perusahaan">Perusahaan Pengolahan</option>
+                  <option value="perusahaan">Industri Pengolahan</option>
                   <option value="pedagang">Pedagang</option>
                   <option value="admin">Administrator</option>
                 </select>
@@ -378,13 +378,13 @@ export default function LoginPage() {
 
               {regRole === 'perusahaan' && (
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Nama Perusahaan</label>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Nama Industri</label>
                   <div className="relative">
                     <Factory className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
                       type="text"
                       className="input-field pl-10"
-                      placeholder="Nama perusahaan"
+                      placeholder="Nama industri pengolahan"
                       value={companyName}
                       onChange={(e) => setCompanyName(e.target.value)}
                     />

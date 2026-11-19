@@ -3,7 +3,8 @@ import { useAuth } from '../../contexts/AuthContext';
 import {
   LayoutDashboard, Brain, TrendingUp, Shield, Handshake, Store,
   DollarSign, AlertTriangle, ClipboardList, Anchor, GitBranch,
-  BarChart3, Users, Settings, LogOut, ChevronLeft, ChevronRight, Waves
+  BarChart3, Users, Settings, LogOut, ChevronLeft, ChevronRight, Waves,
+  Factory, Fish
 } from 'lucide-react';
 import { useState } from 'react';
 import type { UserRole } from '../../types';
@@ -23,10 +24,11 @@ const NAV_ITEMS: NavItem[] = [
   { path: '/sustainability', label: 'Sustainable Catch', icon: <Shield size={20} />, roles: ['admin', 'nelayan', 'tpi'] },
   { path: '/demand-matching', label: 'Demand Matching', icon: <Handshake size={20} />, roles: ['admin', 'tpi', 'perusahaan'] },
   { path: '/price-prediction', label: 'Price Prediction', icon: <DollarSign size={20} />, roles: ['admin', 'nelayan', 'tpi', 'perusahaan', 'pedagang'] },
-  { path: '/food-loss', label: 'Food Loss Prevention', icon: <AlertTriangle size={20} />, roles: ['admin', 'tpi'], section: 'Operasional' },
+  { path: '/industrial-demand', label: 'Industrial Demand', icon: <Factory size={20} />, roles: ['admin', 'tpi'], section: 'Operasional' },
+  { path: '/food-loss', label: 'Food Loss Prevention', icon: <AlertTriangle size={20} />, roles: ['admin', 'tpi'] },
   { path: '/tpi-landing', label: 'Data Pendaratan TPI', icon: <ClipboardList size={20} />, roles: ['admin', 'tpi'] },
   { path: '/fishing-plan', label: 'Rencana Melaut', icon: <Anchor size={20} />, roles: ['nelayan'] },
-  { path: '/marketplace', label: 'Smart Marketplace', icon: <Store size={20} />, roles: ['pedagang', 'perusahaan', 'admin'], section: 'Marketplace' },
+  { path: '/marketplace', label: 'Fish Catalog', icon: <Fish size={20} />, roles: ['tpi', 'perusahaan', 'pedagang', 'admin'], section: 'Katalog' },
   { path: '/workflow', label: 'System Workflow', icon: <GitBranch size={20} />, roles: ['admin'], section: 'Sistem' },
   { path: '/analytics', label: 'Analytics & Reports', icon: <BarChart3 size={20} />, roles: ['admin'] },
   { path: '/user-management', label: 'User Management', icon: <Users size={20} />, roles: ['admin'] },
@@ -51,7 +53,7 @@ export default function Sidebar() {
     const labels: Record<UserRole, string> = {
       nelayan: 'Nelayan',
       tpi: 'TPI',
-      perusahaan: 'Perusahaan',
+      perusahaan: 'Industri',
       pedagang: 'Pedagang',
       admin: 'Administrator',
     };

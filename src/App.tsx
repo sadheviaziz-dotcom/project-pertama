@@ -15,6 +15,7 @@ import FoodLoss from './pages/FoodLoss';
 import TPILanding from './pages/TPILanding';
 import FishingPlan from './pages/FishingPlan';
 import Marketplace from './pages/Marketplace';
+import IndustrialDemand from './pages/IndustrialDemand';
 import Workflow from './pages/Workflow';
 import Analytics from './pages/Analytics';
 import UserManagement from './pages/UserManagement';
@@ -55,6 +56,8 @@ export default function App() {
             <Route path="/tpi-landing" element={<TPILanding />} />
             <Route path="/fishing-plan" element={<FishingPlan />} />
             <Route path="/marketplace" element={<Marketplace />} />
+            <Route path="/fish-catalog" element={<Marketplace />} />
+            <Route path="/industrial-demand" element={<IndustrialDemand />} />
             <Route path="/workflow" element={<Workflow />} />
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/user-management" element={<UserManagement />} />

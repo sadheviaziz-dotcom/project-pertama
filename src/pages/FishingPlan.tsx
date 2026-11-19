@@ -59,7 +59,7 @@ export default function FishingPlan() {
         riskLevel: 'rendah',
         recommendations: [
           'Kondisi ekologis perairan WPPNRI 712 pada koordinat target menunjukkan stabilitas stok yang memadai.',
-          'Estimasi pasokan swanggi mingguan mendekati total serapan industri (surplus kecil ~400 kg aman diserap cold storage).',
+          'Estimasi pasokan swanggi mingguan seimbang dengan kapasitas lelang TPI (surplus aman tersimpan dalam cold storage).',
           'Direkomendasikan koordinasi awal dengan TPI Brondong H-1 pendaratan untuk lelang prioritas.',
           'Waspadai gelombang laut setinggi 1.2–1.5 meter di bagian utara perairan pada hari kedua.',
         ],
@@ -267,12 +267,12 @@ export default function FishingPlan() {
                 </div>
 
                 <div className="p-3.5 bg-white rounded-xl border border-slate-200">
-                  <p className="text-[11px] text-slate-500 uppercase font-semibold">Keseimbangan Pasar Periode</p>
+                  <p className="text-[11px] text-slate-500 uppercase font-semibold">Kapasitas Serap TPI</p>
                   <p className="text-sm font-bold text-slate-800 mt-1">
-                    Pasokan {formatNumber(activeAnalysis.estimatedSupplyKg)} kg
+                    Estimasi Pasokan: {formatNumber(activeAnalysis.estimatedSupplyKg)} kg
                   </p>
-                  <p className="text-[11px] text-slate-400 mt-0.5">
-                    Permintaan: {formatNumber(activeAnalysis.marketDemandKg)} kg
+                  <p className="text-[11px] text-emerald-600 font-semibold mt-0.5">
+                    Daya Serap Lelang: Optimal
                   </p>
                 </div>
               </div>

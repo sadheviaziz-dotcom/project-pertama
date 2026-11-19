@@ -11,7 +11,7 @@ import type {
   User, LandingRecord, FishingPlan, DemandRequest, MarketListing,
   PurchaseOrder, PredictionData, CPUEData, PriceData, FoodLossMetric,
   Notification, SizeDistribution, SupplyDemandBalance, DemandMatch,
-  FishSpecies
+  FishSpecies, IndustrialRequest, FishCatalogItem, TPIStockAlert
 } from '../types';
 
 // ============ USERS ============
@@ -327,9 +327,9 @@ export const NOTIFICATIONS: Notification[] = [
     type: 'info', read: false, createdAt: '2026-11-10T08:00:00'
   },
   {
-    id: 'NT002', userId: 'N001', title: 'Permintaan Pasar Tinggi',
-    message: 'Terdapat 3 permintaan baru dari perusahaan pengolahan untuk ikan swanggi dengan total kebutuhan 5.500 kg.',
-    type: 'success', read: false, createdAt: '2026-11-10T07:30:00'
+    id: 'NT002', userId: 'N001', title: 'Peringatan Stok TPI Mendekati Batas',
+    message: 'Volume stok ikan yang belum terjual di TPI Brondong Unit 1 mendekati batas kapasitas aman. Pantau status pendaratan harian Anda.',
+    type: 'warning', read: false, createdAt: '2026-11-10T07:30:00'
   },
   {
     id: 'NT003', userId: 'N001', title: 'Indikator CPUE Stabil',
@@ -345,6 +345,22 @@ export const NOTIFICATIONS: Notification[] = [
     id: 'NT005', userId: 'P001', title: 'Kecocokan Pasokan Ditemukan',
     message: 'Sistem menemukan kecocokan 92% antara kebutuhan Anda dengan pasokan ikan swanggi di TPI Brondong.',
     type: 'success', read: false, createdAt: '2026-11-10T10:00:00'
+  },
+  // [SIMULASI] Notifikasi stok TPI untuk nelayan
+  {
+    id: 'NT006', userId: 'N001', title: 'Stok Ikan Swanggi Tinggi di TPI',
+    message: 'Stok ikan swanggi belum terjual di TPI Brondong Unit 1 mencapai 310 kg (di atas threshold 300 kg). Pertimbangkan koordinasi penjualan lebih awal.',
+    type: 'warning', read: false, createdAt: '2026-11-10T11:00:00'
+  },
+  {
+    id: 'NT007', userId: 'N002', title: 'Stok Ikan Swanggi Tinggi di TPI',
+    message: 'Stok ikan swanggi (kelas sedang, grade A) di TPI Brondong Unit 1 menumpuk 310 kg. Segera koordinasikan dengan petugas TPI untuk redistribusi.',
+    type: 'warning', read: false, createdAt: '2026-11-10T11:05:00'
+  },
+  {
+    id: 'NT008', userId: 'N003', title: 'Stok Ikan Tongkol Belum Terjual',
+    message: 'Stok ikan tongkol Anda di TPI Brondong Unit 1 sebesar 300 kg belum terjual. Harga pasar saat ini Rp 15.000/kg.',
+    type: 'warning', read: false, createdAt: '2026-11-10T11:10:00'
   },
 ];
 
@@ -397,5 +413,223 @@ export function formatCurrency(amount: number): string {
 
 export function formatNumber(n: number): string {
   return new Intl.NumberFormat('id-ID').format(n);
+}
+
+// ============================================================
+// [SIMULASI] Data baru: Industrial Requests, Fish Catalog, TPI Stock Alerts
+// ============================================================
+
+// ============ INDUSTRIAL REQUESTS ============
+// [SIMULASI] Contoh pengajuan kebutuhan bahan baku dari industri pengolahan
+export const INDUSTRIAL_REQUESTS: IndustrialRequest[] = [
+  {
+    id: 'IR001',
+    industryId: 'P001',
+    industryName: 'CV Samudra Protein',
+    fishSpecies: 'Ikan Swanggi',
+    quantityKg: 1500,
+    sizePreference: 'sedang',
+    gradeQuality: 'A',
+    fishCondition: 'segar',
+    requiredDate: '2026-11-14',
+    additionalNotes: 'Untuk produksi tepung ikan ekspor. Preferensi berat per ekor > 200g.',
+    status: 'tersedia_sebagian',
+    submittedAt: '2026-11-10T08:00:00',
+  },
+  {
+    id: 'IR002',
+    industryId: 'P002',
+    industryName: 'PT Indo Surimi',
+    fishSpecies: 'Ikan Swanggi',
+    quantityKg: 3000,
+    sizePreference: 'semua',
+    gradeQuality: 'B',
+    fishCondition: 'semua',
+    requiredDate: '2026-11-16',
+    additionalNotes: 'Bahan baku surimi. Kondisi beku dapat diterima jika kadar air terjaga.',
+    status: 'menunggu',
+    submittedAt: '2026-11-10T09:30:00',
+  },
+  {
+    id: 'IR003',
+    industryId: 'P003',
+    industryName: 'UD Berkah Laut',
+    fishSpecies: 'Ikan Tongkol',
+    quantityKg: 800,
+    sizePreference: 'sedang',
+    gradeQuality: 'B',
+    fishCondition: 'segar',
+    requiredDate: '2026-11-13',
+    additionalNotes: 'Untuk produksi ikan kaleng. Kondisi segar wajib, tidak menerima beku.',
+    status: 'tersedia',
+    submittedAt: '2026-11-09T14:00:00',
+  },
+  {
+    id: 'IR004',
+    industryId: 'P001',
+    industryName: 'CV Samudra Protein',
+    fishSpecies: 'Ikan Kembung',
+    quantityKg: 500,
+    sizePreference: 'kecil',
+    gradeQuality: 'C',
+    fishCondition: 'semua',
+    requiredDate: '2026-11-15',
+    additionalNotes: 'Untuk pakan ternak. Grade C dapat diterima asal tidak busuk.',
+    status: 'belum_terpenuhi',
+    submittedAt: '2026-11-08T10:00:00',
+  },
+];
+
+// ============ FISH CATALOG ============
+// [SIMULASI] Katalog stok ikan TPI — data stock diambil & dihitung dari LANDING_RECORDS
+// Kelompok: (fishSpecies, sizeCategory, quality) → aggregate weightKg & unsoldKg
+export const FISH_CATALOG: FishCatalogItem[] = [
+  {
+    // LR001(unsold=100) + LR004(unsold=80) + LR008(unsold=30) + LR010(unsold=100) = 310 unsold
+    // total = 850+780+680+900 = 3210; reserved dari ML001(250)+ML005(350) = 600 (berbeda grade, sederhanakan ke 0 reserved untuk grade A)
+    id: 'CAT001',
+    fishSpecies: 'Ikan Swanggi',
+    scientificName: 'Priacanthus tayenus',
+    totalStockKg: 3210,
+    unsoldKg: 310,
+    reservedKg: 0,
+    availableKg: 310,
+    sizeCategory: 'sedang',
+    quality: 'A',
+    pricePerKg: 18000,
+    location: 'Brondong, Lamongan',
+    tpiName: 'TPI Brondong Unit 1',
+    updatedAt: '2026-11-10T10:00:00',
+  },
+  {
+    // LR010(unsold=100, grade B sedang) — entry terpisah untuk grade B sedang
+    id: 'CAT002',
+    fishSpecies: 'Ikan Swanggi',
+    scientificName: 'Priacanthus tayenus',
+    totalStockKg: 900,
+    unsoldKg: 100,
+    reservedKg: 350,
+    availableKg: 0,
+    sizeCategory: 'sedang',
+    quality: 'B',
+    pricePerKg: 16000,
+    location: 'Brondong, Lamongan',
+    tpiName: 'TPI Brondong Unit 1',
+    updatedAt: '2026-11-10T10:00:00',
+  },
+  {
+    // LR002(unsold=0) + LR006(unsold=70) = 70 unsold, total 620+920=1540; reserved ML002(180)
+    id: 'CAT003',
+    fishSpecies: 'Ikan Swanggi',
+    scientificName: 'Priacanthus tayenus',
+    totalStockKg: 1540,
+    unsoldKg: 70,
+    reservedKg: 70,
+    availableKg: 0,
+    sizeCategory: 'besar',
+    quality: 'A',
+    pricePerKg: 21500,
+    location: 'Brondong, Lamongan',
+    tpiName: 'TPI Brondong Unit 1',
+    updatedAt: '2026-11-10T10:00:00',
+  },
+  {
+    // LR003(unsold=300, sedang, B); reserved ML003(400 — available, belum reserved)
+    id: 'CAT004',
+    fishSpecies: 'Ikan Tongkol',
+    scientificName: 'Euthynnus affinis',
+    totalStockKg: 1200,
+    unsoldKg: 300,
+    reservedKg: 0,
+    availableKg: 300,
+    sizeCategory: 'sedang',
+    quality: 'B',
+    pricePerKg: 15000,
+    location: 'Brondong, Lamongan',
+    tpiName: 'TPI Brondong Unit 1',
+    updatedAt: '2026-11-10T10:00:00',
+  },
+  {
+    // LR005(unsold=50, kecil, B); reserved ML004(120)
+    id: 'CAT005',
+    fishSpecies: 'Ikan Kembung',
+    scientificName: 'Rastrelliger kanagurta',
+    totalStockKg: 450,
+    unsoldKg: 50,
+    reservedKg: 50,
+    availableKg: 0,
+    sizeCategory: 'kecil',
+    quality: 'B',
+    pricePerKg: 12000,
+    location: 'Brondong, Lamongan',
+    tpiName: 'TPI Brondong Unit 1',
+    updatedAt: '2026-11-10T10:00:00',
+  },
+  {
+    // LR007(unsold=50, sedang, B); reserved ML006(150)
+    id: 'CAT006',
+    fishSpecies: 'Ikan Kurisi',
+    scientificName: 'Nemipterus japonicus',
+    totalStockKg: 350,
+    unsoldKg: 50,
+    reservedKg: 50,
+    availableKg: 0,
+    sizeCategory: 'sedang',
+    quality: 'B',
+    pricePerKg: 14000,
+    location: 'Brondong, Lamongan',
+    tpiName: 'TPI Brondong Unit 1',
+    updatedAt: '2026-11-10T10:00:00',
+  },
+];
+
+// ============ TPI STOCK ALERTS ============
+// [SIMULASI] Alert stok TPI untuk notifikasi nelayan — threshold 300 kg
+// alertLevel: 'tinggi' jika unsoldKg > 300, 'kritis' jika > 600, 'normal' jika <= 300
+export const TPI_STOCK_ALERTS: TPIStockAlert[] = [
+  {
+    id: 'SA001',
+    fishSpecies: 'Ikan Swanggi',
+    totalStockKg: 3210,
+    unsoldKg: 310,
+    reservedKg: 0,
+    threshold: 300,
+    alertLevel: 'tinggi',
+    updatedAt: '2026-11-10T10:00:00',
+    message: 'Stok ikan swanggi (sedang, grade A) di TPI Brondong Unit 1 melebihi batas aman (310 kg > 300 kg). Koordinasi penjualan segera disarankan.',
+  },
+  {
+    id: 'SA002',
+    fishSpecies: 'Ikan Tongkol',
+    totalStockKg: 1200,
+    unsoldKg: 300,
+    reservedKg: 0,
+    threshold: 300,
+    alertLevel: 'tinggi',
+    updatedAt: '2026-11-10T10:00:00',
+    message: 'Stok ikan tongkol (sedang, grade B) di TPI Brondong Unit 1 mencapai batas threshold (300 kg). Pantau perkembangan dan koordinasikan redistribusi jika diperlukan.',
+  },
+  {
+    id: 'SA003',
+    fishSpecies: 'Ikan Kembung',
+    totalStockKg: 450,
+    unsoldKg: 50,
+    reservedKg: 50,
+    threshold: 300,
+    alertLevel: 'normal',
+    updatedAt: '2026-11-10T10:00:00',
+    message: 'Stok ikan kembung (kecil, grade B) di TPI Brondong Unit 1 dalam batas aman (50 kg). Tidak diperlukan tindakan segera.',
+  },
+];
+
+// ============ HELPER FUNCTIONS (baru) ============
+// [SIMULASI]
+export function getIndustrialRequestsByIndustry(industryId: string): IndustrialRequest[] {
+  return INDUSTRIAL_REQUESTS.filter(r => r.industryId === industryId);
+}
+
+// [SIMULASI]
+export function getCatalogBySpecies(species: string): FishCatalogItem[] {
+  return FISH_CATALOG.filter(c => c.fishSpecies === species);
 }
 

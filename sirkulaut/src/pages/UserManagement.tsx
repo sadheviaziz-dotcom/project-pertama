@@ -161,7 +161,7 @@ export default function UserManagement() {
               <option value="all">Semua Peran (Aktor)</option>
               <option value="nelayan">Nelayan</option>
               <option value="tpi">Pengelola TPI</option>
-              <option value="perusahaan">Perusahaan Pengolahan</option>
+              <option value="perusahaan">Industri Pengolahan</option>
               <option value="pedagang">Pedagang & UMKM</option>
               <option value="admin">Administrator</option>
             </select>
@@ -201,7 +201,7 @@ export default function UserManagement() {
                           : 'badge-warning'
                       }`}
                     >
-                      {u.role}
+                      {u.role === 'perusahaan' ? 'industri' : u.role}
                     </span>
                   </td>
                   <td className="table-cell text-xs text-slate-700 font-medium">
@@ -306,7 +306,7 @@ export default function UserManagement() {
                 >
                   <option value="nelayan">Nelayan</option>
                   <option value="tpi">Pengelola TPI</option>
-                  <option value="perusahaan">Perusahaan Pengolahan</option>
+                  <option value="perusahaan">Industri Pengolahan</option>
                   <option value="pedagang">Pedagang / UMKM</option>
                   <option value="admin">Administrator</option>
                 </select>
@@ -327,7 +327,7 @@ export default function UserManagement() {
 
               {newUser.role === 'perusahaan' && (
                 <div>
-                  <label className="block text-slate-700 font-semibold mb-1">Nama Perusahaan</label>
+                  <label className="block text-slate-700 font-semibold mb-1">Nama Industri</label>
                   <input
                     type="text"
                     value={newUser.companyName}

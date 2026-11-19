@@ -93,7 +93,7 @@ const WORKFLOW_STEPS: WorkflowStep[] = [
   {
     step: 8,
     title: 'Pencocokan Otomatis Permintaan Industri',
-    actor: 'Perusahaan Pengolahan',
+    actor: 'Industri Pengolahan',
     actorColor: 'bg-purple-50 text-purple-800 border-purple-200',
     icon: <Handshake size={20} className="text-purple-600" />,
     desc: 'AI Demand Matching menghubungkan lot ikan segar dengan spesifikasi pabrik surimi/fillet terdekat.',

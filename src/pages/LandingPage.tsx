@@ -166,7 +166,7 @@ export default function LandingPage() {
             {[
               { icon: BarChart3, title: 'Prediksi Hasil Tangkapan', desc: 'Forecast berbasis AI untuk membantu perencanaan operasi penangkapan dan manajemen pasokan.', color: 'text-teal', bg: 'bg-teal/10' },
               { icon: Leaf, title: 'Pemantauan Keberlanjutan', desc: 'Analisis CPUE dan status stok ikan untuk memastikan eksploitasi tetap dalam batas berkelanjutan.', color: 'text-success', bg: 'bg-emerald-50' },
-              { icon: ShoppingCart, title: 'Pencocokan Pasar', desc: 'Matching otomatis antara supply nelayan dan demand perusahaan untuk efisiensi distribusi.', color: 'text-cyan', bg: 'bg-cyan/10' },
+              { icon: ShoppingCart, title: 'Pencocokan Pasar', desc: 'Matching otomatis antara supply nelayan dan demand industri untuk efisiensi distribusi.', color: 'text-cyan', bg: 'bg-cyan/10' },
               { icon: Recycle, title: 'Pencegahan Food Loss', desc: 'Deteksi dini potensi food loss dan redistribusi otomatis ke saluran alternatif.', color: 'text-warning', bg: 'bg-amber-50' },
             ].map((s) => (
               <div key={s.title} className="card-hover text-center group">
@@ -191,7 +191,7 @@ export default function LandingPage() {
           {[
             { icon: Brain, title: 'Landing Forecast', desc: 'Model time-series prediksi volume pendaratan ikan harian dan mingguan berdasarkan data historis, cuaca, dan musim.', color: 'text-purple-600', bg: 'bg-purple-50' },
             { icon: ShieldCheck, title: 'Sustainable Catch', desc: 'Evaluasi tingkat eksploitasi sumber daya berdasarkan indeks CPUE dan ambang batas keberlanjutan.', color: 'text-success', bg: 'bg-emerald-50' },
-            { icon: Handshake, title: 'Demand Matching', desc: 'Algoritma pencocokan multi-kriteria antara pasokan TPI dan permintaan perusahaan pengolahan.', color: 'text-cyan', bg: 'bg-cyan/10' },
+            { icon: Handshake, title: 'Demand Matching', desc: 'Algoritma pencocokan multi-kriteria antara pasokan TPI dan permintaan industri pengolahan.', color: 'text-cyan', bg: 'bg-cyan/10' },
             { icon: DollarSign, title: 'Price Prediction', desc: 'Prediksi harga ikan di tingkat TPI berdasarkan tren pasar, volume, dan dinamika supply-demand.', color: 'text-teal', bg: 'bg-teal/10' },
             { icon: AlertTriangle, title: 'Food Loss Prevention', desc: 'Deteksi dini surplus tak terserap pasar dan optimasi redistribusi untuk meminimalkan food loss.', color: 'text-warning', bg: 'bg-amber-50' },
           ].map((m) => (
@@ -221,7 +221,7 @@ export default function LandingPage() {
             {[
               { icon: Anchor, title: 'Nelayan', desc: 'Input rencana tangkap, lihat prediksi & rekomendasi AI' },
               { icon: ClipboardList, title: 'TPI', desc: 'Catat pendaratan, kelola data & distribusi hasil laut' },
-              { icon: Factory, title: 'Perusahaan', desc: 'Ajukan demand, temukan supplier, pantau ketersediaan' },
+              { icon: Factory, title: 'Industri', desc: 'Ajukan demand, temukan supplier, pantau ketersediaan' },
               { icon: Store, title: 'Pedagang', desc: 'Akses listing pasar, beli ikan, kelola pesanan' },
               { icon: Settings, title: 'Administrator', desc: 'Kelola pengguna, pantau sistem, analisis keseluruhan' },
             ].map((a) => (

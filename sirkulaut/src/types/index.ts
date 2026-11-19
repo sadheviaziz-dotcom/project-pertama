@@ -1,5 +1,8 @@
 export type UserRole = 'nelayan' | 'tpi' | 'perusahaan' | 'pedagang' | 'admin';
 
+// [SIMULASI] Alias for 'perusahaan' role used in industrial context
+export type IndustryRole = 'perusahaan';
+
 export interface User {
   id: string;
   name: string;
@@ -13,6 +16,7 @@ export interface User {
   vesselName?: string; // nelayan
   tpiName?: string; // tpi
   companyName?: string; // perusahaan
+  industryName?: string; // [SIMULASI] alias untuk companyName pada role perusahaan (industri)
   businessName?: string; // pedagang
   businessType?: string; // pedagang: 'umkm' | 'restoran' | 'hotel' | 'pedagang'
 }
@@ -174,5 +178,56 @@ export interface SupplyDemandBalance {
   supply: number;
   demand: number;
   gap: number;
+}
+
+// ============================================================
+// [SIMULASI] Tipe-tipe baru untuk fitur industri & katalog TPI
+// ============================================================
+
+/** Pengajuan kebutuhan bahan baku dari industri pengolahan ikan */
+export interface IndustrialRequest {
+  id: string;
+  industryId: string;
+  industryName: string;
+  fishSpecies: string;
+  quantityKg: number;
+  sizePreference: 'kecil' | 'sedang' | 'besar' | 'semua';
+  gradeQuality: 'A' | 'B' | 'C';
+  fishCondition: 'segar' | 'beku' | 'semua';
+  requiredDate: string;
+  additionalNotes: string;
+  status: 'menunggu' | 'tersedia_sebagian' | 'tersedia' | 'belum_terpenuhi';
+  submittedAt: string;
+}
+
+/** Katalog stok ikan yang tersedia di TPI */
+export interface FishCatalogItem {
+  id: string;
+  fishSpecies: string;
+  scientificName?: string;
+  imageUrl?: string;
+  totalStockKg: number;
+  unsoldKg: number;
+  reservedKg: number;
+  availableKg: number;
+  sizeCategory: 'kecil' | 'sedang' | 'besar';
+  quality: 'A' | 'B' | 'C';
+  pricePerKg: number;
+  location: string;
+  tpiName: string;
+  updatedAt: string;
+}
+
+/** Alert stok TPI untuk notifikasi kepada nelayan */
+export interface TPIStockAlert {
+  id: string;
+  fishSpecies: string;
+  totalStockKg: number;
+  unsoldKg: number;
+  reservedKg: number;
+  threshold: number;
+  alertLevel: 'normal' | 'tinggi' | 'kritis';
+  updatedAt: string;
+  message: string;
 }
 

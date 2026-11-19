@@ -223,11 +223,11 @@ export default function DemandMatching() {
         </div>
       </div>
 
-      {/* Daftar Kebutuhan Perusahaan (Tabel Permintaan Aktif) */}
+      {/* Daftar Kebutuhan Industri (Tabel Permintaan Aktif) */}
       <div className="card space-y-4">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div>
-            <h3 className="font-bold text-navy text-base">Permintaan Bahan Baku Perusahaan Terdaftar</h3>
+            <h3 className="font-bold text-navy text-base">Permintaan Bahan Baku Industri Terdaftar</h3>
             <p className="text-xs text-slate-500">Data live kebutuhan spesifik komoditas perikanan</p>
           </div>
 
@@ -260,7 +260,7 @@ export default function DemandMatching() {
           <table className="w-full text-left">
             <thead>
               <tr className="table-header">
-                <th className="table-cell">ID & Perusahaan</th>
+                <th className="table-cell">ID & Industri</th>
                 <th className="table-cell">Komoditas</th>
                 <th className="table-cell">Jumlah Dibutuhkan</th>
                 <th className="table-cell">Spesifikasi Ukuran</th>

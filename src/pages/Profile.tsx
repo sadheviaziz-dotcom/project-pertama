@@ -141,7 +141,7 @@ export default function Profile() {
 
               {user?.role === 'perusahaan' && (
                 <div>
-                  <label className="block text-slate-700 font-semibold mb-1">Nama Perusahaan Pengolahan</label>
+                  <label className="block text-slate-700 font-semibold mb-1">Nama Industri Pengolahan</label>
                   <input
                     type="text"
                     value={formData.companyName}
@@ -209,7 +209,7 @@ export default function Profile() {
               <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 bg-slate-50/50 hover:bg-slate-50 cursor-pointer">
                 <div>
                   <p className="font-semibold text-slate-800">Kecocokan AI Demand Matching Baru</p>
-                  <p className="text-[11px] text-slate-500">Pemberitahuan ketika ada perusahaan yang memerlukan komoditas tangkapan Anda.</p>
+                  <p className="text-[11px] text-slate-500">Pemberitahuan ketika ada industri yang memerlukan komoditas tangkapan Anda.</p>
                 </div>
                 <input
                   type="checkbox"

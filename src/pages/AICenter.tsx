@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import {
   Brain,
   TrendingUp,
@@ -23,6 +24,7 @@ const modules = [
       'Prediksi hasil tangkapan ikan menggunakan model time-series. Estimasi volume pendaratan mingguan beserta interval kepercayaan.',
     status: 'active' as const,
     color: '#00bcd4',
+    roles: ['admin', 'nelayan', 'tpi', 'perusahaan'],
   },
   {
     path: '/sustainability',
@@ -33,6 +35,7 @@ const modules = [
       'Pemantauan indikator keberlanjutan sumber daya ikan melalui analisis CPUE, distribusi ukuran, dan intensitas penangkapan.',
     status: 'monitoring' as const,
     color: '#10b981',
+    roles: ['admin', 'nelayan', 'tpi'],
   },
   {
     path: '/demand-matching',
@@ -43,6 +46,7 @@ const modules = [
       'Pencocokan otomatis antara pasokan hasil tangkapan dengan permintaan industri pengolahan menggunakan algoritma multi-kriteria.',
     status: 'active' as const,
     color: '#0d7377',
+    roles: ['admin', 'tpi', 'perusahaan'],
   },
   {
     path: '/price-prediction',
@@ -53,6 +57,7 @@ const modules = [
       'Estimasi harga ikan berdasarkan tren pasar, volume pasokan, musim, dan faktor kualitas untuk mendukung keputusan transaksi.',
     status: 'active' as const,
     color: '#f59e0b',
+    roles: ['admin', 'nelayan', 'tpi', 'perusahaan', 'pedagang'],
   },
   {
     path: '/food-loss',
@@ -63,10 +68,16 @@ const modules = [
       'Deteksi dini potensi surplus ikan yang tidak terserap pasar dan rekomendasi redistribusi untuk mencegah food loss.',
     status: 'monitoring' as const,
     color: '#ef4444',
+    roles: ['admin', 'tpi'],
   },
 ];
 
 export default function AICenter() {
+  const { user } = useAuth();
+  const visibleModules = modules.filter(
+    (mod) => !user || mod.roles.includes(user.role)
+  );
+
   return (
     <div className="space-y-6">
       <PageHeader
@@ -103,7 +114,7 @@ export default function AICenter() {
 
       {/* Module Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {modules.map((mod) => {
+        {visibleModules.map((mod) => {
           const Icon = mod.icon;
           return (
             <div
